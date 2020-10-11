@@ -503,8 +503,16 @@ namespace
 
 			const SDL_RendererFlip flip = static_cast<SDL_RendererFlip>((doHorizontalFlip ? SDL_FLIP_HORIZONTAL : 0) | (doVerticalFlip ? SDL_FLIP_VERTICAL : 0));
 
+			Uint8 original_mod_r, original_mod_g, original_mod_b, original_mod_a;
+			SDL_GetTextureColorMod(texture, &original_mod_r, &original_mod_g, &original_mod_b);
+			SDL_GetTextureAlphaMod(texture, &original_mod_a);
+
 			SDL_SetTextureColorMod(texture, static_cast<uint8_t>(color.R * 255), static_cast<uint8_t>(color.G * 255), static_cast<uint8_t>(color.B * 255));
+			SDL_SetTextureAlphaMod(texture, static_cast<uint8_t>(color.A * 255));
 			SDL_RenderCopyEx(CurrentDevice->Renderer, texture, &source, &destination, 0.0, nullptr, flip);
+
+			SDL_SetTextureColorMod(texture, original_mod_r, original_mod_g, original_mod_b);
+			SDL_SetTextureAlphaMod(texture, original_mod_a);
 		}
 		else
 		{
