@@ -611,6 +611,11 @@ namespace ImGuiSDL
 						ImDrawVert v1 = vertexBuffer[indexBuffer[i + 1]];
 						ImDrawVert v2 = vertexBuffer[indexBuffer[i + 2]];
 
+						if (Color(v0.col).A == 0 && Color(v1.col).A == 0 && Color(v2.col).A == 0) {
+							// totally transparent, who passed this in
+							continue;
+						}
+
 						const Rect bounding = Rect::CalculateBoundingBox(v0, v1, v2);
 
 						const bool isTriangleUniformColor = v0.col == v1.col && v1.col == v2.col;
