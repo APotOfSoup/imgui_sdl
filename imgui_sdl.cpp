@@ -556,6 +556,10 @@ namespace ImGuiSDL
 		SDL_GetRenderDrawBlendMode(CurrentDevice->Renderer, &blendMode);
 		SDL_SetRenderDrawBlendMode(CurrentDevice->Renderer, SDL_BLENDMODE_BLEND);
 
+		float scaleX, scaleY;
+		SDL_GetRenderScale(CurrentDevice->Renderer, &scaleX, &scaleY);
+		SDL_SetRenderScale(CurrentDevice->Renderer, 1.0f, 1.0f);
+
 		Uint8 initialR, initialG, initialB, initialA;
 		SDL_GetRenderDrawColor(CurrentDevice->Renderer, &initialR, &initialG, &initialB, &initialA);
 
@@ -670,6 +674,9 @@ namespace ImGuiSDL
 
 		SDL_SetRenderDrawColor(CurrentDevice->Renderer,
 			initialR, initialG, initialB, initialA);
+
+		SDL_SetRenderScale(CurrentDevice->Renderer, 1.0f, 1.0f);
+		SDL_RendererSetScale(CurrentDevice->Renderer, scaleX, scaleY);
 
 		SDL_SetRenderDrawBlendMode(CurrentDevice->Renderer, blendMode);
 	}
